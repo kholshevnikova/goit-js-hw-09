@@ -56,6 +56,7 @@ populateFormField();
 
 function onFormSubmit(event) {
   event.preventDefault();
+
   if (!formData.email.trim() || !formData.message.trim()) {
     alert('Please fill in all fields!');
     return;
@@ -63,6 +64,8 @@ function onFormSubmit(event) {
   console.log(formData);
   event.currentTarget.reset();
   localStorage.removeItem(FEEDBACK_STORAGE_KEY);
+  formData.email = '';
+  formData.message = '';
 }
 
 function onFormInput(event) {
@@ -74,7 +77,8 @@ formRefs.form.addEventListener('submit', onFormSubmit);
 formRefs.form.addEventListener('input', onFormInput);
 
 function populateFormField() {
-  const storedData = localStorage.getItem(FEEDBACK_STORAGE_KEY) || {};
+  const storedData =
+    JSON.parse(localStorage.getItem(FEEDBACK_STORAGE_KEY)) || {};
   console.log(storedData);
   if (!storedData) return;
 
